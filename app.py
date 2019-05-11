@@ -14,6 +14,7 @@ import requests
 from datetime import datetime
 
 app = Flask(__name__)
+cors = CORS(app)
 
 # @app.route('/upload')
 # def upload_file():
@@ -315,7 +316,6 @@ def feedback():
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
-	cors = CORS(app, resources=r'/*')
     # app.config['CORS_HEADERS'] = 'Content-Type'
 	app.run(host='0.0.0.0', port=port,debug=True)
 	# app.run()
