@@ -14,7 +14,6 @@ import requests
 from datetime import datetime
 
 app = Flask(__name__)
-cors = CORS(app, resources=r'/*')
 
 # @app.route('/upload')
 # def upload_file():
@@ -168,7 +167,7 @@ def pull():
 def size():
     if request.method == 'GET':
         test_id = request.values['test_id']
-	print(files[test_id].shape)
+        print(files[test_id].shape)
         return str(files[test_id].shape[0])
 
 # PUSH ANSWER
