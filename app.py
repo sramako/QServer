@@ -100,9 +100,8 @@ def tests():
         email = request.values['email']
         session_id = request.values['session_id']
         if(validate_user(email, session_id)):
-            cursor = filescol.find({},{'_id':0})
             ret = []
-            for document in cursor:
+            for document in file_list:
               if(check_access(email,document['test_id'])):
                   print(document)
                   ret.append(document)
@@ -121,10 +120,10 @@ def upload_file():
       filescol.insert_one({'test_id':test_id,'name':name,'sub':sub})
       return 'File uploaded successfully'
 
-@app.route('/tests', methods = ['GET', 'POST'])
-def explore():
-    s = os.listdir('upload')
-    return json.dumps(s)
+# @app.route('/tests', methods = ['GET', 'POST'])
+# def explore():
+#     s = os.listdir('upload')
+#     return json.dumps(s)
 
 # SETUP THE TEST FOR USER
 @app.route('/testdetails', methods = ['GET', 'POST'])
@@ -168,7 +167,7 @@ def size():
     if request.method == 'GET':
         test_id = request.values['test_id']
         print(files[test_id].shape)
-        return str("Size Called")
+        return str(files[test_id].shape[0])
 
 # PUSH ANSWER
 @app.route('/push', methods = ['GET', 'POST'])
