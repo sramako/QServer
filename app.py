@@ -103,7 +103,7 @@ def tests():
         if(validate_user(email, session_id)):
             ret = []
             for document in file_list:
-              if(check_access(email,document['test_id'])):
+              if(check_access(email,document)):
                   print(document)
                   ret.append(document)
             return json.dumps(ret)
