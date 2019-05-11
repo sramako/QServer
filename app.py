@@ -168,7 +168,7 @@ def size():
     if request.method == 'GET':
         test_id = request.values['test_id']
         print(files[test_id].shape)
-        return str(files[test_id].shape[0])
+        return str("Size Called")
 
 # PUSH ANSWER
 @app.route('/push', methods = ['GET', 'POST'])
