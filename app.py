@@ -168,6 +168,7 @@ def pull():
 def size():
     if request.method == 'GET':
         test_id = request.values['test_id']
+	print(files[test_id].shape)
         return str(files[test_id].shape[0])
 
 # PUSH ANSWER
