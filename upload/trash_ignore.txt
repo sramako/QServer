@@ -1,1 +1,0 @@
-upload directory is required to store temporary files
