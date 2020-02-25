@@ -15,6 +15,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # @app.route('/upload')
 # def upload_file():
@@ -74,7 +75,7 @@ def validate_admin(email, session_id):
 # ACCESS CONTROL LIST
 acl = userdb['acl']
 def check_access(email,test_id):
-    if email in ['sramakoo@gmail.com','choudhuryrini24@gmail.com','jayantach@gmail.com']:
+    if email in ['sramakoo@gmail.com','choudhuryrini24@gmail.com','jayantach@gmail.com','sraman.choudhury@gmail.com']:
         return True
     acl_data = acl.find({'email':email, 'test_id':test_id})
     count = 0
@@ -102,11 +103,23 @@ def tests():
         session_id = request.values['session_id']
         if(validate_user(email, session_id)):
             ret = []
+            filescol = userdb['files']
+            cursor = filescol.find({})
+            dbfiles = []
+            file_list = os.listdir('upload')
+            file_list = list(map(lambda x:x.split('.')[0], file_list))
+            for d in cursor:
+                dbfiles.append(d)
             for document in file_list:
-              if(check_access(email,document)):
-                  print(document)
-                  ret.append(document)
+                if(check_access(email,document)):
+                    for d in dbfiles:
+                        print(str(d['test_id']), document)
+                        if str(d['test_id']) == document:
+                            ret.append({'test_id':d['test_id'], 'sub':d['sub'], 'name':d['name']})
+                else:
+                    print('Unauthorized Access to File')
             return json.dumps(ret)
+
 
 # UPLOAD TEST
 @app.route('/uploader', methods = ['GET', 'POST'])
